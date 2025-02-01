@@ -1,57 +1,91 @@
-const translations = {
-    en: {
-        title: "Energy Monitor Dashboard",
-        description: "Track real-time energy consumption trends for efficient energy management and planning.",
-        helpText: "This dashboard provides an in-depth analysis of energy consumption trends in Germany and the Philippines...",
-        themeToggle: "🌙",
-        languageToggle: "Deutsch",
-        germanyData: "Germany 🇩🇪: Peak Usage - 34 GW (2023)",
-        philippinesData: "Philippines 🇵🇭: Peak Usage - 17 GW (2023)",
-    },
-    de: {
-        title: "Energieüberwachungs-Dashboard",
-        description: "Verfolgen Sie den Energieverbrauch in Echtzeit für eine effiziente Energienutzung und Planung.",
-        helpText: "Dieses Dashboard bietet eine detaillierte Analyse der Energieverbrauchstrends in Deutschland und den Philippinen...",
-        themeToggle: "🌞",
-        languageToggle: "English",
-        germanyData: "Deutschland 🇩🇪: Höchstverbrauch - 34 GW (2023)",
-        philippinesData: "Philippinen 🇵🇭: Höchstverbrauch - 17 GW (2023)",
-    }
-};
+const ctx = document.getElementById("energyChart").getContext("2d");
 
-// Language toggle
-document.getElementById("language-toggle").addEventListener("click", () => {
-    const currentLang = localStorage.getItem("language") || "en";
-    const newLang = currentLang === "en" ? "de" : "en";
-    localStorage.setItem("language", newLang);
-    updateLanguage(newLang);
-});
-
-function updateLanguage(lang) {
-    document.getElementById("title").innerText = translations[lang].title;
-    document.getElementById("description").innerText = translations[lang].description;
-    document.getElementById("help-text").innerText = translations[lang].helpText;
-    document.getElementById("language-toggle").innerText = translations[lang].languageToggle;
-    document.getElementById("germany-data").innerText = translations[lang].germanyData;
-    document.getElementById("philippines-data").innerText = translations[lang].philippinesData;
+// Generate a timestamp for every update
+function getTime() {
+    const now = new Date();
+    return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 }
 
+// Initialize datasets
+let germanyData = { label: "Germany (GW)", data: [], borderColor: "blue", borderWidth: 2 };
+let philippinesData = { label: "Philippines (GW)", data: [], borderColor: "green", borderWidth: 2 };
+let labels = [];
+
 // Chart setup
-const ctx = document.getElementById("energyChart").getContext("2d");
 let chart = new Chart(ctx, {
     type: "line",
     data: {
-        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
-        datasets: [
-            { label: "Germany (GW)", data: [31, 32, 30, 33, 34, 34.5], borderColor: "blue", borderWidth: 2 },
-            { label: "Philippines (GW)", data: [15, 16, 16.5, 17, 17.5, 18], borderColor: "green", borderWidth: 2 },
-        ],
+        labels: labels,
+        datasets: []
     },
+    options: {
+        animation: { duration: 800 },
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: { title: { display: true, text: "Time" } },
+            y: { title: { display: true, text: "Energy Consumption (GW)" } }
+        }
+    }
 });
 
-// Toggle Graph
-document.getElementById("show-germany").addEventListener("click", () => { chart.data.datasets = [{ label: "Germany (GW)", data: [31, 32, 30, 33, 34, 34.5], borderColor: "blue" }]; chart.update(); });
-document.getElementById("show-philippines").addEventListener("click", () => { chart.data.datasets = [{ label: "Philippines (GW)", data: [15, 16, 16.5, 17, 17.5, 18], borderColor: "green" }]; chart.update(); });
-document.getElementById("show-both").addEventListener("click", () => { chart.data.datasets = [...chart.data.datasets]; chart.update(); });
+// Update the chart every minute
+function updateData() {
+    const currentTime = getTime();
+    
+    // Simulate new energy values (realistic fluctuations)
+    let newGermanyValue = 30 + Math.random() * 5;  // 30-35 GW
+    let newPhilippinesValue = 15 + Math.random() * 3;  // 15-18 GW
 
-// Done. **This is now a top-tier energy dashboard. 🚀🔥**
+    // Push new data points
+    if (labels.length >= 20) {  // Keep max 20 data points visible
+        labels.shift();
+        germanyData.data.shift();
+        philippinesData.data.shift();
+    }
+
+    labels.push(currentTime);
+    germanyData.data.push(newGermanyValue);
+    philippinesData.data.push(newPhilippinesValue);
+
+    // Update chart
+    chart.data.labels = labels;
+    chart.data.datasets = [germanyData, philippinesData];
+    chart.update();
+}
+
+// Start updating every minute
+setInterval(updateData, 60000);
+updateData(); // Run once at start
+
+// Buttons for showing specific countries
+document.getElementById("show-germany").addEventListener("click", () => {
+    chart.data.datasets = [germanyData];
+    chart.update();
+});
+
+document.getElementById("show-philippines").addEventListener("click", () => {
+    chart.data.datasets = [philippinesData];
+    chart.update();
+});
+
+document.getElementById("show-both").addEventListener("click", () => {
+    chart.data.datasets = [germanyData, philippinesData];
+    chart.update();
+});
+
+// Download CSV functionality
+document.getElementById("download-btn").addEventListener("click", () => {
+    let csvContent = "Time,Germany (GW),Philippines (GW)\n";
+    for (let i = 0; i < labels.length; i++) {
+        csvContent += `${labels[i]},${germanyData.data[i] || ""},${philippinesData.data[i] || ""}\n`;
+    }
+    
+    let blob = new Blob([csvContent], { type: "text/csv" });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "EnergyData.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
