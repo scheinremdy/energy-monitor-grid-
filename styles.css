@@ -1,53 +1,67 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: white;
-    color: black;
+    background-color: #f4f4f4;
+    color: #333;
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 20px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #0077cc;
+    background: #333;
     color: white;
+    padding: 15px;
 }
 
-nav {
-    margin-top: 10px;
+.controls {
+    display: flex;
+    gap: 10px;
 }
 
 button {
-    background-color: #0077cc;
+    background: #555;
     color: white;
     border: none;
     padding: 10px;
-    margin: 5px;
     cursor: pointer;
-    font-size: 14px;
     border-radius: 5px;
 }
 
 button:hover {
-    background-color: #005fa3;
+    background: #777;
 }
 
 .hidden {
     display: none;
 }
 
+canvas {
+    max-width: 90%;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.data-insights {
+    background: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
 .dark-mode {
-    background-color: #1e1e1e;
+    background-color: #222;
     color: white;
 }
 
-.dark-mode header {
-    background-color: #333;
+.dark-mode .data-insights {
+    background: #444;
 }
 
 .dark-mode button {
-    background-color: #444;
+    background: #777;
 }
