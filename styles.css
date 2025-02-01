@@ -1,59 +1,53 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: white;
+    color: black;
     text-align: center;
     margin: 0;
     padding: 0;
-    transition: background 0.3s, color 0.3s;
 }
 
 header {
-    background: #007bff;
-    color: white;
-    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    background-color: #0077cc;
+    color: white;
 }
 
-.header-controls button {
-    background: white;
+nav {
+    margin-top: 10px;
+}
+
+button {
+    background-color: #0077cc;
+    color: white;
     border: none;
-    font-size: 1rem;
-    padding: 5px 10px;
+    padding: 10px;
+    margin: 5px;
     cursor: pointer;
-    margin-left: 5px;
+    font-size: 14px;
+    border-radius: 5px;
 }
 
-.grid-container {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-}
-
-canvas {
-    width: 100% !important;
-    height: auto !important;
+button:hover {
+    background-color: #005fa3;
 }
 
 .hidden {
     display: none;
 }
 
-footer {
-    margin-top: 20px;
-    padding: 10px;
-    background: #007bff;
-    color: white;
-}
-
 .dark-mode {
-    background-color: #222;
+    background-color: #1e1e1e;
     color: white;
 }
 
-.dark-mode header,
-.dark-mode footer {
-    background-color: #0056b3;
+.dark-mode header {
+    background-color: #333;
+}
+
+.dark-mode button {
+    background-color: #444;
 }
