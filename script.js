@@ -1,17 +1,17 @@
 const translations = {
     en: {
-        title: "Energy Consumption Monitor",
-        infoText: "An Energy Monitor Grid is a system used to track and optimize energy consumption.",
-        helpText: "This graph represents energy usage trends in Germany and the Philippines. Hover to see values.",
+        title: "Energy Consumption Analysis",
+        infoText: "Tracking energy consumption trends for better efficiency and planning.",
+        helpText: "The graph compares energy consumption in Germany and the Philippines. Hover over points for details.",
         themeToggle: "🌙",
         languageToggle: "Deutsch",
         germanyData: "Germany: Peak Usage - 34 GW (2023)",
         philippinesData: "Philippines: Peak Usage - 17 GW (2023)",
     },
     de: {
-        title: "Energieverbrauchsmonitor",
-        infoText: "Ein Energiegitter überwacht und optimiert den Energieverbrauch.",
-        helpText: "Dieses Diagramm zeigt die Energieverbrauchstrends in Deutschland und den Philippinen. Bewegen Sie den Mauszeiger für Werte.",
+        title: "Energieverbrauchsanalyse",
+        infoText: "Überwachung des Energieverbrauchs für bessere Effizienz und Planung.",
+        helpText: "Das Diagramm vergleicht den Energieverbrauch in Deutschland und den Philippinen. Bewegen Sie den Mauszeiger für Details.",
         themeToggle: "🌞",
         languageToggle: "English",
         germanyData: "Deutschland: Höchstverbrauch - 34 GW (2023)",
@@ -47,7 +47,7 @@ document.getElementById("help-toggle").addEventListener("click", () => {
     document.getElementById("help-section").classList.toggle("hidden");
 });
 
-// Load stored settings on page load
+// Load settings
 document.addEventListener("DOMContentLoaded", () => {
     const savedLang = localStorage.getItem("language") || "en";
     updateLanguage(savedLang);
@@ -64,26 +64,26 @@ new Chart(ctx, {
                 label: "Germany (GW)",
                 data: [31, 32, 30, 33, 34, 34.5],
                 borderColor: "blue",
+                borderWidth: 2,
                 fill: false,
             },
             {
                 label: "Philippines (GW)",
                 data: [15, 16, 16.5, 17, 17.5, 18],
                 borderColor: "green",
+                borderWidth: 2,
                 fill: false,
             },
         ],
     },
-    options: {
-        responsive: true,
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: function (context) {
-                        return `${context.dataset.label}: ${context.raw} GW`;
-                    },
-                },
-            },
-        },
-    },
+});
+
+// Download Data
+document.getElementById("download-btn").addEventListener("click", () => {
+    const csvContent = "Year,Germany (GW),Philippines (GW)\n2018,31,15\n2019,32,16\n2020,30,16.5\n2021,33,17\n2022,34,17.5\n2023,34.5,18";
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "EnergyData.csv";
+    link.click();
 });
