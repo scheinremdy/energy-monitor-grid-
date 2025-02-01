@@ -1,14 +1,48 @@
 const ctx = document.getElementById("energyChart").getContext("2d");
+const langBtn = document.getElementById("language-toggle");
+const themeBtn = document.getElementById("theme-toggle");
+const helpBtn = document.getElementById("help-toggle");
+const helpSection = document.getElementById("help-section");
+const showGermanyBtn = document.getElementById("show-germany");
+const showPhilippinesBtn = document.getElementById("show-philippines");
+const showBothBtn = document.getElementById("show-both");
+const downloadBtn = document.getElementById("download-btn");
+const description = document.getElementById("description");
 
-// Generate a timestamp for every update
+let language = "en"; // Default language
+let darkMode = false;
+
+// Toggle Language
+langBtn.addEventListener("click", () => {
+    language = language === "en" ? "de" : "en";
+    langBtn.textContent = language === "en" ? "Deutsch" : "English";
+    document.getElementById("title").textContent = language === "en" ? "Real-Time Energy Monitor" : "Echtzeit-Energieüberwachung";
+    description.textContent = language === "en" 
+        ? "Live energy consumption updates for Germany and the Philippines." 
+        : "Echtzeit-Aktualisierungen des Energieverbrauchs für Deutschland und die Philippinen.";
+});
+
+// Toggle Dark Mode
+themeBtn.addEventListener("click", () => {
+    darkMode = !darkMode;
+    document.body.style.backgroundColor = darkMode ? "#222" : "#f4f4f4";
+    document.body.style.color = darkMode ? "#fff" : "#333";
+});
+
+// Toggle Help Section
+helpBtn.addEventListener("click", () => {
+    helpSection.classList.toggle("hidden");
+});
+
+// Generate a timestamp
 function getTime() {
     const now = new Date();
     return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 }
 
 // Initialize datasets
-let germanyData = { label: "Germany (GW)", data: [], borderColor: "blue", borderWidth: 2 };
-let philippinesData = { label: "Philippines (GW)", data: [], borderColor: "green", borderWidth: 2 };
+let germanyData = { label: "Germany (GW)", data: [], borderColor: "blue", borderWidth: 2, fill: false };
+let philippinesData = { label: "Philippines (GW)", data: [], borderColor: "green", borderWidth: 2, fill: false };
 let labels = [];
 
 // Chart setup
@@ -16,7 +50,7 @@ let chart = new Chart(ctx, {
     type: "line",
     data: {
         labels: labels,
-        datasets: []
+        datasets: [germanyData, philippinesData]
     },
     options: {
         animation: { duration: 800 },
@@ -33,12 +67,12 @@ let chart = new Chart(ctx, {
 function updateData() {
     const currentTime = getTime();
     
-    // Simulate new energy values (realistic fluctuations)
+    // Simulate realistic energy fluctuations
     let newGermanyValue = 30 + Math.random() * 5;  // 30-35 GW
     let newPhilippinesValue = 15 + Math.random() * 3;  // 15-18 GW
 
-    // Push new data points
-    if (labels.length >= 20) {  // Keep max 20 data points visible
+    // Maintain max 20 data points
+    if (labels.length >= 20) {
         labels.shift();
         germanyData.data.shift();
         philippinesData.data.shift();
@@ -50,32 +84,31 @@ function updateData() {
 
     // Update chart
     chart.data.labels = labels;
-    chart.data.datasets = [germanyData, philippinesData];
     chart.update();
 }
 
 // Start updating every minute
 setInterval(updateData, 60000);
-updateData(); // Run once at start
+updateData(); // Initial run
 
-// Buttons for showing specific countries
-document.getElementById("show-germany").addEventListener("click", () => {
+// Button events for showing different datasets
+showGermanyBtn.addEventListener("click", () => {
     chart.data.datasets = [germanyData];
     chart.update();
 });
 
-document.getElementById("show-philippines").addEventListener("click", () => {
+showPhilippinesBtn.addEventListener("click", () => {
     chart.data.datasets = [philippinesData];
     chart.update();
 });
 
-document.getElementById("show-both").addEventListener("click", () => {
+showBothBtn.addEventListener("click", () => {
     chart.data.datasets = [germanyData, philippinesData];
     chart.update();
 });
 
-// Download CSV functionality
-document.getElementById("download-btn").addEventListener("click", () => {
+// Download CSV function
+downloadBtn.addEventListener("click", () => {
     let csvContent = "Time,Germany (GW),Philippines (GW)\n";
     for (let i = 0; i < labels.length; i++) {
         csvContent += `${labels[i]},${germanyData.data[i] || ""},${philippinesData.data[i] || ""}\n`;
