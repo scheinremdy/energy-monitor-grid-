@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Monitor Grid</title>
+    <title>Energy Consumption Analysis</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1 id="title">Energy Consumption Monitor</h1>
+        <h1 id="title">Energy Consumption Analysis</h1>
         <div class="controls">
             <button id="theme-toggle">🌙</button>
             <button id="language-toggle">Deutsch</button>
@@ -17,27 +17,31 @@
     </header>
 
     <section class="info">
-        <h2>📊 <span id="info-section">An Energy Monitor Grid is a system used to track and optimize energy consumption.</span></h2>
+        <h2>📊 <span id="info-section">Tracking energy consumption trends for better efficiency and planning.</span></h2>
         <button id="help-toggle">ℹ️ Help</button>
     </section>
 
     <div id="help-section" class="hidden">
         <h3>How to Read the Graph</h3>
         <p id="help-text">
-            This graph shows the energy consumption trends in Germany 🇩🇪 and the Philippines 🇵🇭.  
-            - Hover over points to see exact values.  
-            - Click on legends to toggle datasets.  
-            - Use the dropdown to filter by year.  
+            The graph compares energy consumption in Germany 🇩🇪 and the Philippines 🇵🇭 over recent years.  
+            - Hover over points for details.  
+            - Click on legends to show/hide data.  
+            - Click 'Download Data' for CSV export.  
         </p>
     </div>
 
-    <canvas id="energyChart"></canvas>
+    <div class="chart-container">
+        <canvas id="energyChart"></canvas>
+    </div>
 
     <section class="data-insights">
         <h3>📌 Key Energy Insights</h3>
         <p id="germany-data">Germany: Peak Usage - 34 GW (2023)</p>
         <p id="philippines-data">Philippines: Peak Usage - 17 GW (2023)</p>
     </section>
+
+    <button id="download-btn">⬇️ Download Data (CSV)</button>
 
     <script src="script.js"></script>
 </body>
