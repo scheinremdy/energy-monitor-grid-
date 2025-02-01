@@ -11,31 +11,18 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #333;
+    background: #222;
     color: white;
     padding: 15px;
 }
 
-.controls {
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    background: #555;
+.controls button {
+    background: #444;
     color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
     border-radius: 5px;
-}
-
-button:hover {
-    background: #777;
-}
-
-.hidden {
-    display: none;
 }
 
 .chart-container {
@@ -51,30 +38,4 @@ button:hover {
 canvas {
     width: 100% !important;
     height: 450px !important;
-}
-
-.data-insights {
-    background: #ddd;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
-.dark-mode {
-    background-color: #222;
-    color: white;
-}
-
-.dark-mode .data-insights {
-    background: #444;
-}
-
-.dark-mode button {
-    background: #777;
-}
-
-#download-btn {
-    margin-top: 20px;
-    background: green;
-    font-size: 16px;
 }
