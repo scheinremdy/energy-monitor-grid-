@@ -1,54 +1,45 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: #007BFF;
+    background: #222;
     color: white;
+    padding: 15px;
 }
 
-.controls {
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    padding: 10px;
+.controls button {
+    background: #444;
+    color: white;
     border: none;
+    padding: 10px;
     cursor: pointer;
     border-radius: 5px;
-    transition: 0.3s;
 }
 
-button:hover {
-    opacity: 0.8;
-}
-
-main {
+.chart-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
     padding: 20px;
-    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 canvas {
-    max-width: 800px;
-    margin-top: 20px;
-    width: 100%;
+    width: 100% !important;
+    height: 500px !important;
 }
 
-.dark-mode {
-    background-color: #222;
-    color: #fff;
-}
-
-.dark-mode header {
-    background-color: #0056b3;
+.hidden {
+    display: none;
 }
