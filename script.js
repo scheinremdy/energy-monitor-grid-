@@ -5,7 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const helpButton = document.getElementById("help-button");
     const infoSection = document.getElementById("info-section");
     const helpSection = document.getElementById("help-section");
-    
+    const chartCanvas = document.getElementById("energyChart");
+
+    // Check if all elements exist
+    if (!themeToggle || !langToggle || !infoButton || !helpButton || !infoSection || !helpSection || !chartCanvas) {
+        console.error("Some elements are missing. Check your HTML structure.");
+        return;
+    }
+
     let isDarkMode = false;
     let isEnglish = true;
 
@@ -38,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const germanyData = [520, 480, 510, 530, 560, 590, 620, 640, 600, 570, 540, 500]; // Simulated data in GWh
     const philippinesData = [200, 210, 220, 230, 250, 270, 290, 310, 300, 280, 260, 240];
 
-    const ctx = document.getElementById("energyChart").getContext("2d");
+    const ctx = chartCanvas.getContext("2d");
 
     new Chart(ctx, {
         type: "line",
