@@ -1,69 +1,81 @@
 document.addEventListener("DOMContentLoaded", () => {
     const ctx = document.getElementById("energyChart").getContext("2d");
+    const languageToggle = document.getElementById("language-toggle");
+    const themeToggle = document.getElementById("theme-toggle");
+    const helpButton = document.getElementById("help-button");
+    const helpSection = document.getElementById("help-section");
+    const downloadDataBtn = document.getElementById("download-data");
+    const statusIndicator = document.getElementById("status-indicator");
+
+    let currentLanguage = "en";
+
+    const chartData = {
+        labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00"],
+        datasets: [{
+            label: "Energy Usage (kWh)",
+            data: [10, 20, 30, 25, 15, 35],
+            borderColor: "#007bff",
+            backgroundColor: "rgba(0, 123, 255, 0.2)",
+            fill: true,
+        }],
+    };
 
     const energyChart = new Chart(ctx, {
         type: "line",
-        data: {
-            labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00"],
-            datasets: [
-                {
-                    label: "Germany (MW)",
-                    data: [500, 520, 480, 510, 530, 495],
-                    borderColor: "blue",
-                    backgroundColor: "rgba(0, 0, 255, 0.2)",
-                    fill: true,
-                },
-                {
-                    label: "Philippines (MW)",
-                    data: [300, 310, 290, 320, 315, 305],
-                    borderColor: "green",
-                    backgroundColor: "rgba(0, 255, 0, 0.2)",
-                    fill: true,
-                },
-            ],
-        },
+        data: chartData,
         options: {
             responsive: true,
+            plugins: { tooltip: { enabled: true } },
             scales: {
-                x: { grid: { display: false } },
-                y: { grid: { display: true }, title: { display: true, text: "Energy Usage (MW)" } }
-            },
-            plugins: {
-                legend: { position: "top" },
-                tooltip: { enabled: true }
+                x: { grid: { display: true } },
+                y: { grid: { display: true } }
             }
         }
     });
 
-    function fetchData() {
-        const newGermanyData = Math.floor(Math.random() * 100) + 450;
-        const newPhilippinesData = Math.floor(Math.random() * 100) + 280;
-
+    setInterval(() => {
+        const newData = Math.floor(Math.random() * 50) + 10;
         energyChart.data.datasets[0].data.shift();
-        energyChart.data.datasets[1].data.shift();
-        energyChart.data.datasets[0].data.push(newGermanyData);
-        energyChart.data.datasets[1].data.push(newPhilippinesData);
+        energyChart.data.datasets[0].data.push(newData);
         energyChart.update();
-    }
 
-    setInterval(fetchData, 3000);
+        let avg = energyChart.data.datasets[0].data.reduce((a, b) => a + b, 0) / 6;
+        if (avg > 40) {
+            statusIndicator.innerHTML = "<strong>Status:</strong> Critical ⚠️";
+        } else if (avg > 25) {
+            statusIndicator.innerHTML = "<strong>Status:</strong> Warning ⚠️";
+        } else {
+            statusIndicator.innerHTML = "<strong>Status:</strong> Normal ✅";
+        }
+    }, 5000);
 
-    // Language Toggle
-    document.getElementById("language-toggle").addEventListener("change", function() {
-        const lang = this.value;
-        document.getElementById("title").textContent = lang === "de" ? "Energie-Monitoring-Netz" : "Energy Monitor Grid";
-        document.getElementById("info-title").textContent = lang === "de" ? "Warum ist die Überwachung des Stromnetzes wichtig?" : "Why Monitoring the Electric Grid is Important";
-        document.getElementById("usage-title").textContent = lang === "de" ? "Nutzungsstatistiken" : "Usage Statistics";
-        document.getElementById("help-title").textContent = lang === "de" ? "Verständnis der Grafik" : "Understanding the Graph";
-    });
-
-    // Theme Toggle
-    document.getElementById("theme-toggle").addEventListener("click", () => {
+    themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
     });
 
-    // Help Section Toggle
-    document.getElementById("help-toggle").addEventListener("click", () => {
-        document.getElementById("help-section").classList.toggle("hidden");
+    languageToggle.addEventListener("click", () => {
+        if (currentLanguage === "en") {
+            document.getElementById("title").textContent = "Energieüberwachungsnetz";
+            document.getElementById("info-title").textContent = "Was ist ein Energieüberwachungsnetz?";
+            document.getElementById("info-text").textContent = "Ein Energieüberwachungsnetz verfolgt und optimiert den Stromverbrauch in Echtzeit.";
+            document.getElementById("help-title").textContent = "So nutzen Sie das Dashboard";
+            languageToggle.textContent = "English";
+            currentLanguage = "de";
+        } else {
+            document.getElementById("title").textContent = "Energy Monitor Grid";
+            document.getElementById("info-title").textContent = "What is an Energy Monitor Grid?";
+            document.getElementById("info-text").textContent = "An Energy Monitor Grid tracks and optimizes electricity consumption in real-time.";
+            document.getElementById("help-title").textContent = "How to Use This Dashboard";
+            languageToggle.textContent = "Deutsch";
+            currentLanguage = "en";
+        }
+    });
+
+    helpButton.addEventListener("click", () => {
+        helpSection.classList.toggle("hidden");
+    });
+
+    downloadDataBtn.addEventListener("click", () => {
+        alert("Downloading CSV...");
     });
 });
