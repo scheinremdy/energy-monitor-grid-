@@ -1,71 +1,91 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const languageToggle = document.getElementById("language-toggle");
     const themeToggle = document.getElementById("theme-toggle");
+    const langToggle = document.getElementById("language-toggle");
+    const infoButton = document.getElementById("info-button");
     const helpButton = document.getElementById("help-button");
+    const infoSection = document.getElementById("info-section");
     const helpSection = document.getElementById("help-section");
-    const downloadDataBtn = document.getElementById("download-data");
-    const statusIndicator = document.getElementById("status-indicator");
+    
+    let isDarkMode = false;
+    let isEnglish = true;
 
-    if (!languageToggle || !themeToggle || !helpButton || !downloadDataBtn || !statusIndicator) {
-        console.error("Some elements are missing. Check your HTML structure.");
-        return;
-    }
+    themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+        isDarkMode = !isDarkMode;
+        themeToggle.textContent = isDarkMode ? "☀️" : "🌙";
+    });
 
-    let currentLanguage = "en";
+    langToggle.addEventListener("click", function () {
+        isEnglish = !isEnglish;
+        document.getElementById("title").textContent = isEnglish ? "Energy Consumption Monitor" : "Energieverbrauchsmonitor";
+        langToggle.textContent = isEnglish ? "Deutsch" : "English";
+        infoButton.textContent = isEnglish ? "ℹ️ Info" : "ℹ️ Informationen";
+        helpButton.textContent = isEnglish ? "❓ Help" : "❓ Hilfe";
+    });
+
+    infoButton.addEventListener("click", function () {
+        infoSection.classList.toggle("hidden");
+        helpSection.classList.add("hidden"); // Hide help when info is opened
+    });
+
+    helpButton.addEventListener("click", function () {
+        helpSection.classList.toggle("hidden");
+        infoSection.classList.add("hidden"); // Hide info when help is opened
+    });
+
+    // Energy Data
+    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const germanyData = [520, 480, 510, 530, 560, 590, 620, 640, 600, 570, 540, 500]; // Simulated data in GWh
+    const philippinesData = [200, 210, 220, 230, 250, 270, 290, 310, 300, 280, 260, 240];
 
     const ctx = document.getElementById("energyChart").getContext("2d");
 
-    const chartData = {
-        labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00"],
-        datasets: [{
-            label: "Energy Usage (kWh)",
-            data: [10, 20, 30, 25, 15, 35],
-            borderColor: "#007bff",
-            backgroundColor: "rgba(0, 123, 255, 0.2)",
-            fill: true,
-        }],
-    };
-
-    const energyChart = new Chart(ctx, {
+    new Chart(ctx, {
         type: "line",
-        data: chartData,
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Germany (GWh)",
+                    data: germanyData,
+                    borderColor: "blue",
+                    backgroundColor: "rgba(0, 0, 255, 0.2)",
+                    fill: true,
+                },
+                {
+                    label: "Philippines (GWh)",
+                    data: philippinesData,
+                    borderColor: "green",
+                    backgroundColor: "rgba(0, 255, 0, 0.2)",
+                    fill: true,
+                },
+            ],
+        },
         options: {
             responsive: true,
-            plugins: { tooltip: { enabled: true } },
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+            },
+            interaction: {
+                mode: "index",
+                intersect: false,
+            },
             scales: {
-                x: { grid: { display: true } },
-                y: { grid: { display: true } }
-            }
-        }
-    });
-
-    themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-    });
-
-    languageToggle.addEventListener("click", () => {
-        if (currentLanguage === "en") {
-            document.getElementById("title").textContent = "Energieüberwachungsnetz";
-            document.getElementById("info-title").textContent = "Was ist ein Energieüberwachungsnetz?";
-            document.getElementById("info-text").textContent = "Ein Energieüberwachungsnetz verfolgt und optimiert den Stromverbrauch in Echtzeit.";
-            document.getElementById("help-title").textContent = "So nutzen Sie das Dashboard";
-            languageToggle.textContent = "English";
-            currentLanguage = "de";
-        } else {
-            document.getElementById("title").textContent = "Energy Monitor Grid";
-            document.getElementById("info-title").textContent = "What is an Energy Monitor Grid?";
-            document.getElementById("info-text").textContent = "An Energy Monitor Grid tracks and optimizes electricity consumption in real-time.";
-            document.getElementById("help-title").textContent = "How to Use This Dashboard";
-            languageToggle.textContent = "Deutsch";
-            currentLanguage = "en";
-        }
-    });
-
-    helpButton.addEventListener("click", () => {
-        helpSection.classList.toggle("hidden");
-    });
-
-    downloadDataBtn.addEventListener("click", () => {
-        alert("Downloading CSV...");
+                x: {
+                    title: {
+                        display: true,
+                        text: "Months",
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Energy Consumption (GWh)",
+                    },
+                },
+            },
+        },
     });
 });
