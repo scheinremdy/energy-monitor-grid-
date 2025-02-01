@@ -26,7 +26,7 @@ header {
 }
 
 .chart-container {
-    width: 85%;
+    width: 90%;
     max-width: 1000px;
     margin: 30px auto;
     background: white;
@@ -37,5 +37,9 @@ header {
 
 canvas {
     width: 100% !important;
-    height: 450px !important;
+    height: 500px !important;
+}
+
+.hidden {
+    display: none;
 }
