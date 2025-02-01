@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const ctx = document.getElementById("energyChart").getContext("2d");
+document.addEventListener("DOMContentLoaded", function () {
     const languageToggle = document.getElementById("language-toggle");
     const themeToggle = document.getElementById("theme-toggle");
     const helpButton = document.getElementById("help-button");
@@ -7,7 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const downloadDataBtn = document.getElementById("download-data");
     const statusIndicator = document.getElementById("status-indicator");
 
+    if (!languageToggle || !themeToggle || !helpButton || !downloadDataBtn || !statusIndicator) {
+        console.error("Some elements are missing. Check your HTML structure.");
+        return;
+    }
+
     let currentLanguage = "en";
+
+    const ctx = document.getElementById("energyChart").getContext("2d");
 
     const chartData = {
         labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00"],
@@ -32,22 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
-    setInterval(() => {
-        const newData = Math.floor(Math.random() * 50) + 10;
-        energyChart.data.datasets[0].data.shift();
-        energyChart.data.datasets[0].data.push(newData);
-        energyChart.update();
-
-        let avg = energyChart.data.datasets[0].data.reduce((a, b) => a + b, 0) / 6;
-        if (avg > 40) {
-            statusIndicator.innerHTML = "<strong>Status:</strong> Critical ⚠️";
-        } else if (avg > 25) {
-            statusIndicator.innerHTML = "<strong>Status:</strong> Warning ⚠️";
-        } else {
-            statusIndicator.innerHTML = "<strong>Status:</strong> Normal ✅";
-        }
-    }, 5000);
 
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark-mode");
