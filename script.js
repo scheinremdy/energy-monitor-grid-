@@ -1,98 +1,89 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const themeToggle = document.getElementById("theme-toggle");
-    const langToggle = document.getElementById("language-toggle");
-    const infoButton = document.getElementById("info-button");
-    const helpButton = document.getElementById("help-button");
-    const infoSection = document.getElementById("info-section");
-    const helpSection = document.getElementById("help-section");
-    const chartCanvas = document.getElementById("energyChart");
-
-    // Check if all elements exist
-    if (!themeToggle || !langToggle || !infoButton || !helpButton || !infoSection || !helpSection || !chartCanvas) {
-        console.error("Some elements are missing. Check your HTML structure.");
-        return;
+const translations = {
+    en: {
+        title: "Energy Consumption Monitor",
+        infoText: "An Energy Monitor Grid is a system used to track and optimize energy consumption.",
+        helpText: "This graph represents energy usage trends in Germany and the Philippines. Hover to see values.",
+        themeToggle: "🌙",
+        languageToggle: "Deutsch",
+        germanyData: "Germany: Peak Usage - 34 GW (2023)",
+        philippinesData: "Philippines: Peak Usage - 17 GW (2023)",
+    },
+    de: {
+        title: "Energieverbrauchsmonitor",
+        infoText: "Ein Energiegitter überwacht und optimiert den Energieverbrauch.",
+        helpText: "Dieses Diagramm zeigt die Energieverbrauchstrends in Deutschland und den Philippinen. Bewegen Sie den Mauszeiger für Werte.",
+        themeToggle: "🌞",
+        languageToggle: "English",
+        germanyData: "Deutschland: Höchstverbrauch - 34 GW (2023)",
+        philippinesData: "Philippinen: Höchstverbrauch - 17 GW (2023)",
     }
+};
 
-    let isDarkMode = false;
-    let isEnglish = true;
+// Language toggle
+document.getElementById("language-toggle").addEventListener("click", () => {
+    const currentLang = localStorage.getItem("language") || "en";
+    const newLang = currentLang === "en" ? "de" : "en";
+    localStorage.setItem("language", newLang);
+    updateLanguage(newLang);
+});
 
-    themeToggle.addEventListener("click", function () {
-        document.body.classList.toggle("dark-mode");
-        isDarkMode = !isDarkMode;
-        themeToggle.textContent = isDarkMode ? "☀️" : "🌙";
-    });
+function updateLanguage(lang) {
+    document.getElementById("title").innerText = translations[lang].title;
+    document.getElementById("info-section").innerText = translations[lang].infoText;
+    document.getElementById("help-text").innerText = translations[lang].helpText;
+    document.getElementById("theme-toggle").innerText = translations[lang].themeToggle;
+    document.getElementById("language-toggle").innerText = translations[lang].languageToggle;
+    document.getElementById("germany-data").innerText = translations[lang].germanyData;
+    document.getElementById("philippines-data").innerText = translations[lang].philippinesData;
+}
 
-    langToggle.addEventListener("click", function () {
-        isEnglish = !isEnglish;
-        document.getElementById("title").textContent = isEnglish ? "Energy Consumption Monitor" : "Energieverbrauchsmonitor";
-        langToggle.textContent = isEnglish ? "Deutsch" : "English";
-        infoButton.textContent = isEnglish ? "ℹ️ Info" : "ℹ️ Informationen";
-        helpButton.textContent = isEnglish ? "❓ Help" : "❓ Hilfe";
-    });
+// Dark mode toggle
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
 
-    infoButton.addEventListener("click", function () {
-        infoSection.classList.toggle("hidden");
-        helpSection.classList.add("hidden"); // Hide help when info is opened
-    });
+// Help section toggle
+document.getElementById("help-toggle").addEventListener("click", () => {
+    document.getElementById("help-section").classList.toggle("hidden");
+});
 
-    helpButton.addEventListener("click", function () {
-        helpSection.classList.toggle("hidden");
-        infoSection.classList.add("hidden"); // Hide info when help is opened
-    });
+// Load stored settings on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("language") || "en";
+    updateLanguage(savedLang);
+});
 
-    // Energy Data
-    const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const germanyData = [520, 480, 510, 530, 560, 590, 620, 640, 600, 570, 540, 500]; // Simulated data in GWh
-    const philippinesData = [200, 210, 220, 230, 250, 270, 290, 310, 300, 280, 260, 240];
-
-    const ctx = chartCanvas.getContext("2d");
-
-    new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Germany (GWh)",
-                    data: germanyData,
-                    borderColor: "blue",
-                    backgroundColor: "rgba(0, 0, 255, 0.2)",
-                    fill: true,
-                },
-                {
-                    label: "Philippines (GWh)",
-                    data: philippinesData,
-                    borderColor: "green",
-                    backgroundColor: "rgba(0, 255, 0, 0.2)",
-                    fill: true,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: "top",
-                },
+// Chart setup
+const ctx = document.getElementById("energyChart").getContext("2d");
+new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
+        datasets: [
+            {
+                label: "Germany (GW)",
+                data: [31, 32, 30, 33, 34, 34.5],
+                borderColor: "blue",
+                fill: false,
             },
-            interaction: {
-                mode: "index",
-                intersect: false,
+            {
+                label: "Philippines (GW)",
+                data: [15, 16, 16.5, 17, 17.5, 18],
+                borderColor: "green",
+                fill: false,
             },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: "Months",
-                    },
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: "Energy Consumption (GWh)",
+        ],
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return `${context.dataset.label}: ${context.raw} GW`;
                     },
                 },
             },
         },
-    });
+    },
 });
