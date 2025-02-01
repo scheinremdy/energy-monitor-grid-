@@ -3,43 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Energy Monitor</title>
+    <title>Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1 id="title">Real-Time Energy Monitor</h1>
+        <h1 id="title">Energy Monitor Grid</h1>
         <div class="controls">
-            <button id="theme-toggle">🌙 Dark Mode</button>
-            <button id="language-toggle">Deutsch</button>
-            <button id="help-toggle">ℹ️ Help</button>
+            <button id="toggle-language">Deutsch</button>
+            <button id="toggle-dark-mode">Dark Mode</button>
         </div>
     </header>
 
-    <section class="info">
-        <h2 id="description">Live energy consumption updates for Germany and the Philippines.</h2>
-    </section>
-
-    <div class="buttons">
-        <button id="show-germany">🇩🇪 Show Germany</button>
-        <button id="show-philippines">🇵🇭 Show Philippines</button>
-        <button id="show-both">🌎 Show Both</button>
-    </div>
-
-    <div class="chart-container">
+    <main>
+        <div class="buttons">
+            <button id="show-ph">Philippines</button>
+            <button id="show-de">Germany</button>
+            <button id="show-both">Both</button>
+            <button id="download-data">Download Data</button>
+        </div>
         <canvas id="energyChart"></canvas>
-    </div>
-
-    <button id="download-btn">⬇️ Download Data (CSV)</button>
-
-    <div id="help-section" class="hidden">
-        <h3>How to Use</h3>
-        <p>📊 This website provides real-time updates on energy consumption.</p>
-        <p>💡 Click on the buttons to view data for Germany, the Philippines, or both.</p>
-        <p>⏳ The graph updates automatically every minute.</p>
-        <p>📥 Click 'Download' to save the data as a CSV file.</p>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
