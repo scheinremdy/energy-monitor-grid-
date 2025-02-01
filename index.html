@@ -3,44 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Consumption Monitor</title>
+    <title>Energy Monitor Grid</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
         <h1 id="title">Energy Consumption Monitor</h1>
-        <button id="theme-toggle">🌙</button>
-        <button id="language-toggle">Deutsch</button>
+        <div class="controls">
+            <button id="theme-toggle">🌙</button>
+            <button id="language-toggle">Deutsch</button>
+        </div>
     </header>
 
-    <nav>
-        <button id="info-button">ℹ️ Info</button>
-        <button id="help-button">❓ Help</button>
-    </nav>
-
-    <section id="info-section" class="hidden">
-        <h2>About the Energy Monitor Grid</h2>
-        <p>
-            An Energy Monitor Grid is a system used to track, manage, and optimize energy consumption within a specific area. 
-            It incorporates smart meters, sensors, and data analytics to monitor electricity usage, detect inefficiencies, and provide real-time insights. 
-            This helps individuals and industries reduce costs and promote sustainable energy consumption.
-        </p>
+    <section class="info">
+        <h2>📊 <span id="info-section">An Energy Monitor Grid is a system used to track and optimize energy consumption.</span></h2>
+        <button id="help-toggle">ℹ️ Help</button>
     </section>
 
-    <section id="help-section" class="hidden">
-        <h2>How to Use the Dashboard</h2>
-        <p>
-            - The graph shows real-time energy usage in Germany and the Philippines.<br>
-            - Hover over the data points to see precise values.<br>
-            - Click on the legend items to toggle specific datasets on or off.<br>
-            - Use the dark mode and language buttons for better usability.<br>
+    <div id="help-section" class="hidden">
+        <h3>How to Read the Graph</h3>
+        <p id="help-text">
+            This graph shows the energy consumption trends in Germany 🇩🇪 and the Philippines 🇵🇭.  
+            - Hover over points to see exact values.  
+            - Click on legends to toggle datasets.  
+            - Use the dropdown to filter by year.  
         </p>
-    </section>
+    </div>
 
     <canvas id="energyChart"></canvas>
 
-    <!-- Ensure the script is at the bottom -->
+    <section class="data-insights">
+        <h3>📌 Key Energy Insights</h3>
+        <p id="germany-data">Germany: Peak Usage - 34 GW (2023)</p>
+        <p id="philippines-data">Philippines: Peak Usage - 17 GW (2023)</p>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
