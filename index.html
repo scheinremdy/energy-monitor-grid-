@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Energy Monitor Grid</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1 id="title">Energy Monitor Grid</h1>
+        <div class="controls">
+            <select id="language-toggle">
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+            </select>
+            <button id="theme-toggle">🌙</button>
+            <button id="help-toggle">ℹ️</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="info">
+            <h2 id="info-title">Why Monitoring the Electric Grid is Important</h2>
+            <p id="description">
+                The electric grid is the backbone of modern society, ensuring power stability for homes, businesses, and industries.
+                Real-time monitoring helps in preventing power outages, optimizing energy distribution, and reducing environmental impact.
+            </p>
+            <ul>
+                <li><strong>Power Stability:</strong> Prevents blackouts and supply disruptions.</li>
+                <li><strong>Energy Efficiency:</strong> Optimizes electricity consumption.</li>
+                <li><strong>Environmental Impact:</strong> Reduces carbon emissions.</li>
+                <li><strong>Cost Reduction:</strong> Prevents unnecessary energy expenses.</li>
+            </ul>
+        </section>
+
+        <section class="grid-container">
+            <canvas id="energyChart"></canvas>
+        </section>
+
+        <section class="details">
+            <h2 id="usage-title">Usage Statistics</h2>
+            <ul id="usage-list"></ul>
+        </section>
+    </main>
+
+    <div id="help-section" class="hidden">
+        <h2 id="help-title">Understanding the Graph</h2>
+        <p id="help-text">
+            The graph displays real-time energy usage for Germany and the Philippines in Megawatts (MW).  
+            <strong>How to read:</strong>
+        </p>
+        <ul>
+            <li><strong>X-Axis:</strong> Time of the day (hourly updates).</li>
+            <li><strong>Y-Axis:</strong> Power consumption in MW.</li>
+            <li><strong>Germany (🔵) vs. Philippines (🟢):</strong> Compare electricity usage.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Energy Grid Monitor | Designed for Sustainable Power Management</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
