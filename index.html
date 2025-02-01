@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Monitor Dashboard</title>
+    <title>Real-Time Energy Monitor</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1 id="title">Energy Monitor Dashboard</h1>
+        <h1 id="title">Real-Time Energy Monitor</h1>
         <div class="controls">
             <button id="theme-toggle">🌙</button>
             <button id="language-toggle">Deutsch</button>
@@ -18,19 +18,8 @@
     </header>
 
     <section class="info">
-        <h2>🔎 <span id="description">Track real-time energy consumption trends for efficient energy management and planning.</span></h2>
+        <h2>🔎 <span id="description">Live energy consumption updates for Germany and the Philippines.</span></h2>
     </section>
-
-    <div id="help-section" class="hidden">
-        <h3>How to Use This Dashboard</h3>
-        <p id="help-text">
-            This dashboard provides an **in-depth analysis of energy consumption** trends in **Germany** 🇩🇪 and the **Philippines** 🇵🇭.  
-            ✅ **Click "Show Germany" or "Show Philippines"** to compare data.  
-            ✅ **Use the Theme Toggle 🌙** for dark mode.  
-            ✅ **Click "Download Data"** to get a CSV report.  
-            ✅ **Hover over the graph** for details.  
-        </p>
-    </div>
 
     <div class="buttons">
         <button id="show-germany">🇩🇪 Show Germany</button>
@@ -41,12 +30,6 @@
     <div class="chart-container">
         <canvas id="energyChart"></canvas>
     </div>
-
-    <section class="data-insights">
-        <h3>📌 Key Insights</h3>
-        <p id="germany-data">Germany 🇩🇪: Peak Usage - 34 GW (2023)</p>
-        <p id="philippines-data">Philippines 🇵🇭: Peak Usage - 17 GW (2023)</p>
-    </section>
 
     <button id="download-btn">⬇️ Download Data (CSV)</button>
 
