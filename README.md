@@ -15,6 +15,7 @@ Mehrsprachigkeit: Implementierung eines Sprachumschalters (Deutsch/Englisch)
 Datenhandling: Simulation von Echtzeit-Datenaktualisierung
 Download-Funktion: Export der Energiedaten als Datei
 UI/UX-Optimierung: Dark-Mode-Integration, responsive Design
+
 Herausforderungen & Lösungen
 Echtzeit-Datenaktualisierung: Eine dynamische Aktualisierung der Diagramme wurde implementiert, um Änderungen im Energieverbrauch live anzuzeigen.
 Mehrsprachige Benutzerführung: Durch eine strukturierte Sprachumschaltung wurden sowohl englisch- als auch deutschsprachige Nutzer berücksichtigt.
