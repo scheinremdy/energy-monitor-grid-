@@ -9,11 +9,17 @@ Technische Fähigkeiten & Technologien
 Während der Entwicklung dieses Projekts wurden folgende Fähigkeiten und Technologien eingesetzt:
 
 Frontend-Entwicklung: HTML, CSS, JavaScript
+
 Datenvisualisierung: Chart.js für interaktive, sich aktualisierende Diagramme
+
 Dynamische Benutzeroberfläche: Event Listener, DOM-Manipulation
+
 Mehrsprachigkeit: Implementierung eines Sprachumschalters (Deutsch/Englisch)
+
 Datenhandling: Simulation von Echtzeit-Datenaktualisierung
+
 Download-Funktion: Export der Energiedaten als Datei
+
 UI/UX-Optimierung: Dark-Mode-Integration, responsive Design
 
 Herausforderungen & Lösungen
